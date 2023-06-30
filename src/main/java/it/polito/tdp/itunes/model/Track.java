@@ -4,16 +4,16 @@ public class Track {
 	private Integer trackId;
 	private String name;
 	private String composer;
-	private int milliseconds;
+	private double seconds;
 	private int bytes;
 	private double unitPrice;
 	
-	public Track(Integer trackId, String name, String composer, int milliseconds, int bytes, double unitPrice) {
+	public Track(Integer trackId, String name, String composer, double seconds, int bytes, double unitPrice) {
 		super();
 		this.trackId = trackId;
 		this.name = name;
 		this.composer = composer;
-		this.milliseconds = milliseconds;
+		this.seconds = seconds;
 		this.bytes = bytes;
 		this.unitPrice = unitPrice;
 	}
@@ -36,11 +36,11 @@ public class Track {
 	public void setComposer(String composer) {
 		this.composer = composer;
 	}
-	public int getMilliseconds() {
-		return milliseconds;
+	public double getSeconds() {
+		return seconds;
 	}
-	public void setMilliseconds(int milliseconds) {
-		this.milliseconds = milliseconds;
+	public void setSeconds(double seconds) {
+		this.seconds = seconds;
 	}
 	public int getBytes() {
 		return bytes;

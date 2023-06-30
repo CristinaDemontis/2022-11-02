@@ -5,8 +5,11 @@
 package it.polito.tdp.itunes;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
+import it.polito.tdp.itunes.model.AnalisiGrafo;
+import it.polito.tdp.itunes.model.Genre;
 import it.polito.tdp.itunes.model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -32,7 +35,7 @@ public class FXMLController {
     private Button btnPlaylist; // Value injected by FXMLLoader
 
     @FXML // fx:id="cmbGenere"
-    private ComboBox<?> cmbGenere; // Value injected by FXMLLoader
+    private ComboBox<Genre> cmbGenere; // Value injected by FXMLLoader
 
     @FXML // fx:id="txtDTOT"
     private TextField txtDTOT; // Value injected by FXMLLoader
@@ -53,6 +56,40 @@ public class FXMLController {
 
     @FXML
     void doCreaGrafo(ActionEvent event) {
+    	
+    	String inputMin = txtMin.getText(); 
+    	String inputMax = txtMax.getText(); 
+    	Genre genere = cmbGenere.getValue();
+    	double min = 0; 
+    	double max = 0; 
+    	
+    	try {
+    		min = Double.parseDouble(inputMin); 
+    		max = Double.parseDouble(inputMax); 
+    		
+    	}catch(NumberFormatException e) {
+    		txtResult.setText("Inserire un valore valido per il min e max ");
+    		return; 
+    	}
+    	
+    	if(genere == null) {
+    		txtResult.setText("Scegliere un genere dalla tendina! ");
+    		return; 
+    	}else {
+    		this.model.creaGrafo(min, max, genere);
+    		txtResult.setText("Grafo creato. \n");
+    		txtResult.appendText("- Vertici: "+ this.model.getnVertici()+"\n");
+    		txtResult.appendText("- Archi: "+ this.model.getnArchi()+"\n");
+    		txtResult.appendText("\n");
+
+    		txtResult.appendText("ANALISI GRAFO: \n");
+    		List<AnalisiGrafo> risultato =  this.model.analizzaGrafo(min, max, genere);
+    		for(AnalisiGrafo a : risultato) {
+    			txtResult.appendText(a.toString()+"\n");
+    		}
+    		
+    		
+    	}
 
     }
 
@@ -70,6 +107,11 @@ public class FXMLController {
     
     public void setModel(Model model) {
     	this.model = model;
+    	List<Genre> result = this.model.getGenre(); 
+    	for(Genre g: result) {
+    		cmbGenere.getItems().add(g); 
+    	}
+    	
     }
 
 }
